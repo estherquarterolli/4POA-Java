@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zabeth's Gourmet - Cadastro de Cliente</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fff0f5; padding: 20px; display: flex; justify-content: center; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h2 { text-align: center; color: #d63384; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { font-weight: 600; display: block; margin-bottom: 5px; color: #333; }
+        input[type="text"], input[type="email"], input[type="tel"] { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
+        input[readonly] { background-color: #e9ecef; color: #666; cursor: not-allowed; }
+        .row { display: flex; gap: 15px; }
+        .row .form-group { flex: 1; }
+        button { width: 100%; padding: 12px; background-color: #d63384; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background-color: #c82373; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Zabeth's Gourmet<br><span style="font-size: 16px; color: #666;">Cadastro para Entregas</span></h2>
+    
+    <form method="POST" action="/cadastro">
+        <div class="form-group">
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" name="nome" placeholder="Ex: Maria da Silva" required>
+        </div>
+        
+        <div class="row">
+            <div class="form-group">
+                <label for="telefone">WhatsApp:</label>
+                <input type="tel" id="telefone" name="telefone" placeholder="(21) 90000-0000" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" placeholder="maria@email.com" required>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+        <div class="row">
+            <div class="form-group" style="flex: 0.6;">
+                <label for="cep">CEP:</label>
+                <input type="text" id="cep" name="cep" maxlength="9" placeholder="00000-000" required>
+            </div>
+            <div class="form-group">
+                <label for="rua">Logradouro (Rua/Av):</label>
+                <input type="text" id="rua" name="rua" readonly required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group" style="flex: 0.4;">
+                <label for="numero">Número:</label>
+                <input type="text" id="numero" name="numero" required>
+            </div>
+            <div class="form-group">
+                <label for="complemento">Complemento:</label>
+                <input type="text" id="complemento" name="complemento" placeholder="Apto, Bloco, Casa...">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="bairro">Bairro:</label>
+                <input type="text" id="bairro" name="bairro" readonly required>
+            </div>
+            <div class="form-group">
+                <label for="cidade">Cidade:</label>
+                <input type="text" id="cidade" name="cidade" readonly required>
+            </div>
+            <div class="form-group" style="flex: 0.4;">
+                <label for="estado">UF:</label>
+                <input type="text" id="estado" name="estado" readonly required>
+            </div>
+        </div>
+        
+        <button type="submit">Salvar Endereço de Entrega</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('cep').addEventListener('blur', function() {
+        // Remove tudo que não for número do CEP digitado
+        let cep = this.value.replace(/\D/g, '');
+
+        if (cep.length === 8) {
+            // Faz a requisição para a API do ViaCEP
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(resposta => resposta.json())
+                .then(dados => {
+                    if (!dados.erro) {
+                        // Preenche os campos do formulário com os dados recebidos
+                        document.getElementById('rua').value = dados.logradouro;
+                        document.getElementById('bairro').value = dados.bairro;
+                        document.getElementById('cidade').value = dados.localidade;
+                        document.getElementById('estado').value = dados.uf;
+                        
+                        // Joga o cursor do mouse direto para o campo "Número"
+                        document.getElementById('numero').focus();
+                    } else {
+                        alert("CEP não encontrado. Verifique os números digitados.");
+                    }
+                })
+                .catch(erro => console.error('Erro ao buscar o CEP:', erro));
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Zabeth's Gourmet</title>
+</head>
+<body>
+    <h1>🧁 Cadastro de Doces</h1>
+    <form method="POST" action="/doceria">
+        Nome: <input type="text" name="nome" required><br><br>
+        Preço: <input type="number" name="preco" step="0.01"><br><br>
+        Categoria: 
+        <select name="tipo">
+            <option value="Bolo">Bolo</option>
+            <option value="Brigadeiro">Brigadeiro</option>
+        </select><br><br>
+        Validade: <input type="date" name="validade"><br><br>
+        <button type="submit">Cadastrar</button>
+    </form>
+</body>
+</html>
