@@ -1,9 +1,0 @@
-GUIA DE EXECUÇÃO
-
-1. Abra o terminal (CMD ou PowerShell) dentro da pasta 'AP6V2'.
-
-2.Digite:javac java/model/Doce.java java/controller/Principal.java
-
-3.Digite: java -cp java controller.Principal
-
-4.http://localhost:8080/doceria

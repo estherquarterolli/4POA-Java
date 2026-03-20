@@ -1,0 +1,74 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Zabeth's Gourmet</title>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            padding: 20px; 
+            background: #fffafa; 
+            color: #333; 
+        }
+        
+        form { 
+            max-width: 300px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 20px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+        }
+        
+        label { 
+            display: block; 
+            margin-top: 10px; 
+            font-weight: bold; 
+        }
+        
+        input, select, button { 
+            width: 100%; 
+            padding: 8px; 
+            margin-top: 5px; 
+            box-sizing: border-box; 
+        }
+        
+        button { 
+            background: #d81b60; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            margin-top: 15px; 
+        }
+        
+        button:hover { 
+            background: #ad1457; 
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align: center;">🧁 Cadastro Zabef com PostgresSQL</h2>
+    
+    <form method="POST" action="DoceServlet">
+        <label>Nome:</label>
+        <input type="text" name="nome" required>
+
+        <label>Preço (R$):</label>
+        <input type="number" name="preco" step="0.01" required>
+
+        <label>Categoria:</label>
+        <select name="tipo">
+            <option value="Bolo">Bolo</option>
+            <option value="Brigadeiro">Brigadeiro</option>
+        </select>
+
+        <label>Validade:</label>
+        <input type="date" name="validade" required>
+
+        <button type="submit">Cadastrar Doce</button>
+    </form>
+
+</body>
+</html>
